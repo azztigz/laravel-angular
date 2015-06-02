@@ -11,11 +11,22 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+// Route::get('/', 'WelcomeController@index');
 
-Route::get('home', 'HomeController@index');
+// Route::get('home', 'HomeController@index');
 
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-]);
+// Route::controllers([
+// 	'auth' => 'Auth\AuthController',
+// 	'password' => 'Auth\PasswordController',
+// ]);
+
+
+Route::get('/', 'main\MainController@index');
+
+Route::group(['prefix'=>'pages'], function(){
+    
+    Route::get('/', 'pages\PagesController@index');
+    Route::get('about', 'pages\PagesController@about');
+    Route::get('contact', 'pages\PagesController@contact');
+
+});
