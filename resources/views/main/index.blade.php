@@ -2,7 +2,7 @@
 
 <!-- angular html-->
 @section('ngapp')
-    ng-app="scotchApp"
+    ng-app="azzApp"
 @stop
 
 <!-- angular body-->
@@ -18,15 +18,15 @@
     
     <script type="text/javascript">
             
-    // create the module and name it scotchApp
-    var scotchApp = angular.module('scotchApp', ['ngRoute']);
+    // create the module and name it azzApp
+    var azzApp = angular.module('azzApp', ['ngRoute']);
 
-    scotchApp.config(function($interpolateProvider){
+    azzApp.config(function($interpolateProvider){
             $interpolateProvider.startSymbol('{[').endSymbol(']}');
         });
 
     // configure our routes
-    scotchApp.config(function($routeProvider) {
+    azzApp.config(function($routeProvider) {
         $routeProvider
             .when('/:name', {
                 templateUrl: function(urlattr){
@@ -39,14 +39,15 @@
                 controller: 'mainController'
             });
 
+
     });
 
     // create the controller and inject Angular's $scope
-    scotchApp.controller('mainController', function($scope) {
+    azzApp.controller('mainController', ['$scope', function($scope) {
         $scope.message = 'HTML enhanced for web apps!';
-    });
+    }]);
 
-    scotchApp.controller('SpicyController', ['$scope', function($scope) {
+    azzApp.controller('SpicyController', ['$scope', function($scope) {
         $scope.spice = 'very';
 
         $scope.chiliSpicy = function(user) {
@@ -58,7 +59,7 @@
         };
     }]);
 
-    scotchApp.controller('MyController', ['$scope','notify', function ($scope, notify) {
+    azzApp.controller('MyController', ['$scope','notify', function ($scope, notify) {
        $scope.callNotify = function(msg) {
          notify(msg);
        };
@@ -72,6 +73,21 @@
          }
        };
      }]);
+
+    azzApp.controller('PhoneListCtrl', function ($scope) {
+      $scope.phones = [
+        {'name': 'Nexus S',
+         'snippet': 'Fast just got faster with Nexus S.'},
+        {'name': 'Motorola XOOM™ with Wi-Fi',
+         'snippet': 'The Next, Next Generation tablet.'},
+        {'name': 'MOTOROLA XOOM™',
+         'snippet': 'The Next, Next Generation tablet.'}
+      ];
+      $scope.dispPhone = function(phone) {
+            alert(phone);
+            $scope.dphone = phone;
+        };
+    });
         
     </script>
 @stop
@@ -94,6 +110,7 @@
   </nav>
 
   <div id="main">
+
     <div id="rout" ng-controller="mainController">
         <div ng-view></div>
     </div>
@@ -111,7 +128,34 @@
       <button ng-click="callNotify(message);">NOTIFY</button>
       <p>(you have to click 3 times to see an alert)</p>
     </div>
+
+    <div class="container-fluid" ng-controller="PhoneListCtrl">
+      <div class="row">
+        <div class="col-md-2">
+          <!--Sidebar content-->
+
+          Search: <input ng-model="query">
+
+        </div>
+        <div class="col-md-10">
+          <!--Body content-->
+
+          <ul class="phones">
+            <li ng-repeat="phone in phones | filter:query">
+              <a href="void:javascript()" ng-click="dispPhone(phone.name)">{[phone.name]}</a>
+              <p>{[phone.snippet]}</p>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+
+    <p>Name: <input type="text" ng-model="name"></p>
+    <p ng-bind="name"></p>
+
   </div>
+
 
 
   
