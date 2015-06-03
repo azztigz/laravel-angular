@@ -7,7 +7,7 @@
 
 <!-- angular body-->
 @section('ngbody')
-    ng-controller="mainController"
+    
 @stop
 
 @section('title')
@@ -94,7 +94,10 @@
   </nav>
 
   <div id="main">
-    <div ng-view></div>
+    <div id="rout" ng-controller="mainController">
+        <div ng-view></div>
+    </div>
+    
     <div ng-controller="SpicyController">
         <input type="text" ng-init="user.name='username'" ng-model="user.name">
          <button ng-click="chiliSpicy(user)">Chili</button>
