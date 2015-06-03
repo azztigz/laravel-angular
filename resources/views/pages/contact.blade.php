@@ -1,4 +1,4 @@
-@extends('layouts.master')
+
 
 <div class="jumbotron text-center">
     <h1>Contact</h1>

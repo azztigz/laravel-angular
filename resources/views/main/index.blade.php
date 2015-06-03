@@ -2,76 +2,83 @@
 
 <!-- angular html-->
 @section('ngapp')
-	ng-app="scotchApp"
+    ng-app="scotchApp"
 @stop
 
 <!-- angular body-->
 @section('ngbody')
-	ng-controller="mainController"
+    ng-controller="mainController"
 @stop
 
 @section('title')
-	Learning | Angular
+    Learning | Angular
 @stop
 
 @section('javascript')
-	
-	<script type="text/javascript">
-			
-	// create the module and name it scotchApp
+    
+    <script type="text/javascript">
+            
+    // create the module and name it scotchApp
     var scotchApp = angular.module('scotchApp', ['ngRoute']);
 
     scotchApp.config(function($interpolateProvider){
-			$interpolateProvider.startSymbol('{[').endSymbol(']}');
-		});
+            $interpolateProvider.startSymbol('{[').endSymbol(']}');
+        });
 
     // configure our routes
     scotchApp.config(function($routeProvider) {
         $routeProvider
-            // route for the home page
+            .when('/:name', {
+                templateUrl: function(urlattr){
+                    return '/pages/' + urlattr.name;
+                },
+                controller: 'mainController'
+            })
             .when('/', {
-                templateUrl : 'pages',
-                controller  : 'mainController'
-            })
-
-            .when('/home', {
-                templateUrl : 'pages',
-                controller  : 'mainController'
-            })
-
-            // route for the about page
-            .when('/about', {
-                templateUrl : 'pages/about',
-                controller  : 'aboutController'
-            })
-
-            // route for the contact page
-            .when('/contact', {
-                templateUrl : 'pages/contact',
-                controller  : 'contactController'
+                templateUrl: '/pages',
+                controller: 'mainController'
             });
+
     });
 
     // create the controller and inject Angular's $scope
     scotchApp.controller('mainController', function($scope) {
-        // create a message to display in our view
-        $scope.message = 'Everyone come and see how good I look!';
+        $scope.message = 'HTML enhanced for web apps!';
     });
 
-    scotchApp.controller('aboutController', function($scope) {
-        $scope.message = 'Look! I am an about page.';
-    });
+    scotchApp.controller('SpicyController', ['$scope', function($scope) {
+        $scope.spice = 'very';
 
-    scotchApp.controller('contactController', function($scope) {
-        $scope.message = 'Contact us! JK. This is just a demo.';
-    });
-		
-	</script>
+        $scope.chiliSpicy = function(user) {
+            $scope.spice = user.name;
+        };
+
+        $scope.jalapenoSpicy = function() {
+            $scope.spice = 'jalapeño';
+        };
+    }]);
+
+    scotchApp.controller('MyController', ['$scope','notify', function ($scope, notify) {
+       $scope.callNotify = function(msg) {
+         notify(msg);
+       };
+     }]).factory('notify', ['$window', function(win) {
+       var msgs = [];
+       return function(msg) {
+         msgs.push(msg);
+         if (msgs.length == 3) {
+           win.alert(msgs.join("\n"));
+           msgs = [];
+         }
+       };
+     }]);
+        
+    </script>
 @stop
 
 
 @section('content')
-	
+    
    <nav class="navbar navbar-default">
     <div class="container">
       <div class="navbar-header">
@@ -79,29 +86,31 @@
       </div>
 
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#home"><i class="fa fa-home"></i> Home</a></li>
-        <li><a href="#about"><i class="fa fa-shield"></i> About</a></li>
+        <li><a href="#/"><i class="fa fa-home"></i> Home</a></li>
+        <li><a href="#tutorial"><i class="fa fa-shield"></i> Tutorial</a></li>
         <li><a href="#contact"><i class="fa fa-comment"></i> Contact</a></li>
       </ul>
     </div>
   </nav>
 
   <div id="main">
-  	<!-- angular templating -->
-        <!-- this is where content will be injected -->
     <div ng-view></div>
+    <div ng-controller="SpicyController">
+        <input type="text" ng-init="user.name='username'" ng-model="user.name">
+         <button ng-click="chiliSpicy(user)">Chili</button>
+         <button ng-click="jalapenoSpicy()">Jalapeño</button>
+         <p>The food is {[spice]} spicy!</p>
+    </div>
 
-	  	<p>Input something in the input box:</p>
-		<p>Name : <input type="text" ng-model="name" placeholder="Enter name here"></p>
-		<h1>Hello {[name]}</h1>
-
-		<div ng-app="" ng-init="quantity=1;cost=5">
-
-		<p>Total in dollar: {[ quantity * cost ]}</p>
-
-	</div>
-  
+    <div id="simple" ng-controller="MyController">
+      <p>Let's try this simple notify service, injected into the controller...</p>
+      <input ng-init="message='test'" ng-model="message" >
+      <button ng-click="callNotify(message);">NOTIFY</button>
+      <p>(you have to click 3 times to see an alert)</p>
+    </div>
   </div>
+
+
   
   <footer class="text-center">
     <p>Single Page</p>

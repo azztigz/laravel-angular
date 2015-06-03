@@ -26,7 +26,7 @@ Route::get('/', 'main\MainController@index');
 Route::group(['prefix'=>'pages'], function(){
     
     Route::get('/', 'pages\PagesController@index');
-    Route::get('about', 'pages\PagesController@about');
+    Route::get('tutorial', 'pages\PagesController@tutorial');
     Route::get('contact', 'pages\PagesController@contact');
 
 });

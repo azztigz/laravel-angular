@@ -15,8 +15,8 @@
 	    <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 
 	    @yield('javascript')
-  </head>
-    <body @yield('ngbody'))>
+  	</head>
+    <body @yield('ngbody')>
 
         @yield('content')
  

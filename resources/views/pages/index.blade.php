@@ -1,7 +1,7 @@
-@extends('layouts.master')
+
 
 <div class="jumbotron text-center">
-    <h1>Home</h1>
+    <h1>Angular JS</h1>
 
     <p>{[ message ]}</p>
 </div>
