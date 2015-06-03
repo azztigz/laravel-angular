@@ -12,7 +12,9 @@
 	    <script type="text/javascript" src="{{ asset('assets/angular-1.4/angular.min.js') }}"></script>
 	    <script type="text/javascript" src="{{ asset('assets/angular-1.4/angular-route.min.js') }}"></script>
 
-	     @yield('javascript')
+	    <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+
+	    @yield('javascript')
   </head>
     <body @yield('ngbody'))>
 

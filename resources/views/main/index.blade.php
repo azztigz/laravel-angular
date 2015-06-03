@@ -15,13 +15,10 @@
 @stop
 
 @section('javascript')
-	 
 	
 	<script type="text/javascript">
-		
-		
-		
-		// create the module and name it scotchApp
+			
+	// create the module and name it scotchApp
     var scotchApp = angular.module('scotchApp', ['ngRoute']);
 
     scotchApp.config(function($interpolateProvider){
@@ -75,7 +72,7 @@
 
 @section('content')
 	
-<nav class="navbar navbar-default">
+   <nav class="navbar navbar-default">
     <div class="container">
       <div class="navbar-header">
         <a class="navbar-brand" href="#home">Angular Routing Example</a>
@@ -90,17 +87,25 @@
   </nav>
 
   <div id="main">
-  
-    <!-- angular templating -->
+  	<!-- angular templating -->
         <!-- this is where content will be injected -->
     <div ng-view></div>
-    
+
+	  	<p>Input something in the input box:</p>
+		<p>Name : <input type="text" ng-model="name" placeholder="Enter name here"></p>
+		<h1>Hello {[name]}</h1>
+
+		<div ng-app="" ng-init="quantity=1;cost=5">
+
+		<p>Total in dollar: {[ quantity * cost ]}</p>
+
+	</div>
+  
   </div>
   
   <footer class="text-center">
     <p>Single Page</p>
   </footer>
-
 
 @stop
 
